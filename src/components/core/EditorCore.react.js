@@ -22,6 +22,7 @@ var ParagraphComboBox = require('../plugins/ParagraphComboBox.react');
 var EmotionDialog =  require('../plugins/EmotionDialog.react');
 var SpecialCharsDialog = require('../plugins/SpecialCharsDialog.react');
 var ImageDialog = require('../plugins/ImageDialog.react');
+var LinkDialog = require('../plugins/LinkDialog.react');
 
 // base components
 var EditorToolbar = require('../core/EditorToolbar.react');
@@ -216,7 +217,6 @@ class EditorCore extends React.Component{
 		}
 	}
     handleToolbarIconClick(e,state){
-    console.log('click')
 		e = e || event;
 		var target = e.target || e.srcElement;
 		var root = ReactDOM.findDOMNode(this.refs.root);
@@ -581,7 +581,7 @@ class EditorCore extends React.Component{
 				EditorSelection.storeRange();
 				this.refs.image.toggle(function(e,html){
 					editarea.focus();
-					EditorSelection.restoreRange('4');
+					EditorSelection.restoreRange();
 
 					if(html && html.length>0){
 						if(EditorSelection.range && EditorSelection.validateRange(root, EditorSelection.range)){
@@ -595,6 +595,28 @@ class EditorCore extends React.Component{
 							// EditorHistory.execCommand('inserthtml',false,html);
 						}else{
 							editarea.innerHTML += '<p>'+html+'</p>';
+						}
+					}
+				})
+				break;
+			case "link":
+				EditorSelection.storeRange();
+				this.refs.link.toggle(function(e,html){
+					editarea.focus();
+					EditorSelection.restoreRange();
+
+					if(html && html.length>0){
+						if(EditorSelection.range && EditorSelection.validateRange(root, EditorSelection.range)){
+							if(EditorSelection.range.pasteHTML){
+								EditorSelection.range.pasteHTML(html);
+							}else{
+								var span = EditorDOM.createNodeByTag('span',html);
+								EditorSelection.range.deleteContents();
+								EditorSelection.insertNode(span);
+							}
+							// EditorHistory.execCommand('inserthtml',false,html);
+						}else{
+							editarea.innerHTML += '<span>'+html+'</span>';
 						}
 					}
 				})
@@ -701,7 +723,7 @@ class EditorCore extends React.Component{
 		EditorDOM.stopPropagation(e);
 	}
 	closeAllOpenDialog(icon){
-		var refsDialog = ["image","color","formula","table","special","emotion","fontsize","fontfamily","paragraph"];
+		var refsDialog = ["link", "image","color","formula","table","special","emotion","fontsize","fontfamily","paragraph"];
         var icons = ["forecolor","backcolor","image","emotion","spechars","inserttable","formula","paragraph","fontsize","fontfamily"]
         if(icons.indexOf(icon)==-1) return;
 		for(var i=0;i<refsDialog.length;i++){
@@ -812,6 +834,7 @@ class EditorCore extends React.Component{
 			return (<div ref="root" id={id} className={"editor-container editor-default" +(className?" "+className:"")} onClick={this.handleClick.bind(this)} onBlur={this.handleRangeChange.bind(this)}  onFocus={this.handleFocus.bind(this)} {...props}>
 					<EditorToolbar ref="toolbar" editorState={editorState} onIconClick={this.handleToolbarIconClick.bind(this)} icons={this.props.icons} paragraph={this.props.paragraph}  fontsize={this.props.fontSize}  fontfamily={this.props.fontFamily}>
 						<ImageDialog hidden={_icons.indexOf("image")==-1} ref="image" uploader={this.props.plugins.image.uploader}/>
+						<LinkDialog hidden={_icons.indexOf("link")==-1} ref="link"/>
 						<ColorDropdown hidden={_icons.indexOf("forecolor")==-1 &&_icons.indexOf("forecolor")}   ref="color" />
 						<FormulaDropdown hidden={ _icons.indexOf("formula")==-1} ref="formula"/>
 						<TablePickerDropdown hidden={_icons.indexOf("inserttable")==-1} ref="table" />
