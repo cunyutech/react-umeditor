@@ -1,4 +1,4 @@
-# react-umeditor
+# react-umeditor-tiny
 
 [![Version](https://img.shields.io/npm/v/react-umeditor.svg)](https://www.npmjs.com/package/react-umeditor)
 [![Downloads](https://img.shields.io/npm/dt/react-umeditor.svg)](https://www.npmjs.com/package/react-umeditor)
