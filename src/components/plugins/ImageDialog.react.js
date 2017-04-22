@@ -301,7 +301,7 @@ class ImageDialog extends React.Component{
 		if(images.length>0 && this.state.handle){
 			for(var i=0;i<images.length;i++){
 				var src = images[i].src;
-				var str = "<img src='"+src+"' />";
+				var str = "<img width='100%' src='"+src+"' />";
 				strImgs += str;
 			}
 			this.state.handle(e,strImgs);
