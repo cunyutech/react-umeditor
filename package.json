@@ -1,7 +1,7 @@
 {
-  "name": "react-umeditor",
-  "version": "1.0.0-rc5",
-  "description": "React Editor like UMEditor",
+  "name": "react-umeditor-tiny",
+  "version": "1.0.0",
+  "description": "React Editor Tiny like UMEditor",
   "main": "lib/editor.js",
   "files": [
     "lib",
@@ -54,18 +54,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/liuhong1happy/react-umeditor.git"
+    "url": "git+https://github.com/cunyutech/react-umeditor-tiny.git"
   },
   "keywords": [
     "react",
-    "react-umeditor"
+    "react-umeditor",
+    "react-wyswyg"
   ],
-  "author": "Holly Liu",
+  "author": "Holly Liu Wskongdesheng",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/liuhong1happy/react-umeditor/issues"
+    "url": "https://github.com/cunyutech/react-umeditor-tiny.git"
   },
-  "homepage": "https://github.com/liuhong1happy/react-umeditor#readme",
+  "homepage": "https://github.com/cunyutech/react-umeditor-tiny.git",
   "dependencies": {
     "hmacsha1": "^1.0.0"
   }
